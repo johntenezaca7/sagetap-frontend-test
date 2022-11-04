@@ -1,14 +1,18 @@
 /* eslint-disable */
 
 import React, { useEffect, useState } from 'react';
-import { ArtItem } from './components';
-import { getAllArtwork, APIResponse } from './util';
+import { ArtItem, AddArtItem } from './components';
+import { getAllArtwork, APIResponse, getArtwork } from './util';
 import './App.css';
 
 function App() {
   // TODO - Figure out correct typeing
-  const [artList, setArtList] = useState<any[]>();
-  const [appError, setAppError] = useState<APIResponse>();
+  const [artList, setArtList] = useState<any[]>([]);
+  const [appError, setAppError] = useState<Partial<APIResponse>>();
+
+  const setAPIError = () => {
+    setAppError({ error: true, message: 'An Error occurred' });
+  };
 
   useEffect(() => {
     const idList = [{ id: 27992 }, { id: 27998 }, { id: 27999 }, { id: 27997 }, { id: 27993 }];
@@ -19,28 +23,61 @@ function App() {
           setArtList(artWork);
         })
         .catch(() => {
-          setAppError({ error: true, message: 'An Error occurred' });
+          setAPIError();
         });
     } catch (error) {
-      setAppError({ error: true, message: 'An Error occurred' });
+      setAPIError();
     }
   }, []);
 
+  const handleRemoveArt = (id: number) => {
+    setArtList((prev) => [...prev.filter((listItem) => listItem.data.id !== id)]);
+  };
+
+  const handleAddArt = (id: number) => {
+    try {
+      getArtwork(id)
+        .then((newArt) => {
+          console.log({ newArt });
+          setArtList((prev) => [...prev, newArt]);
+        })
+        .catch((error) => {
+          console.log({ error });
+          setAPIError();
+        });
+    } catch (error) {
+      setAPIError();
+    }
+  };
+
   return (
     <div className="App">
-      <h1>Art Rater</h1>
-      {!appError?.error &&
-        artList &&
-        artList.length > 0 &&
-        artList.map((art) => {
-          const {
-            data: { id, image_id, title, artist_title }
-          } = art;
+      {appError?.error ? (
+        <p>An Error occurred</p>
+      ) : (
+        <>
+          <h1>Art Rater</h1>
+          {artList.length > 0 &&
+            artList.map((art) => {
+              const {
+                data: { id, image_id, title, artist_title }
+              } = art;
 
-          return <ArtItem key={id} id={id} imageId={image_id} title={title} artistTitle={artist_title} />;
-        })}
+              return (
+                <ArtItem
+                  key={id}
+                  id={id}
+                  imageId={image_id}
+                  title={title}
+                  artistTitle={artist_title}
+                  handleRemoveArt={handleRemoveArt}
+                />
+              );
+            })}
 
-      {appError?.error && <p>An Error occurred</p>}
+          <AddArtItem onClick={handleAddArt} />
+        </>
+      )}
     </div>
   );
 }

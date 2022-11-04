@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { getImageUrl, submitRating, APIResponse } from '../util';
 
 export interface ArtItemProps {
-  id: string;
+  id: number;
   imageId: string;
   title: string;
   artistTitle: string;
+  handleRemoveArt: (id: number) => void;
 }
 
 const Ratings = [1, 2, 3, 4, 5];
 
-export const ArtItem = ({ id, imageId, title, artistTitle }: ArtItemProps) => {
+export const ArtItem = ({ id, imageId, title, artistTitle, handleRemoveArt }: ArtItemProps) => {
   const [rating, setRaiting] = useState<null | number>(null);
-  const [successMessage, setSuccessMessage] = useState<APIResponse>({
+  const [successMessage, setSuccessMessage] = useState<Partial<APIResponse>>({
     message: ''
   });
 
@@ -70,6 +71,7 @@ export const ArtItem = ({ id, imageId, title, artistTitle }: ArtItemProps) => {
           </button>
         </>
       )}
+      <button onClick={() => handleRemoveArt(id)}>Remove Art</button>
     </div>
   );
 };

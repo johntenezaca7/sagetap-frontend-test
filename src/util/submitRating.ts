@@ -1,5 +1,5 @@
 export interface SubmitRatingProps {
-  id: string;
+  id: number;
   rating: number;
 }
 export const submitRating = ({ id, rating }: SubmitRatingProps) => {

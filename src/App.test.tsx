@@ -6,7 +6,7 @@ import { submitRating, getAllArtwork } from './util';
 
 const mocks = {
   title: 'Art Rater',
-  artWork: { title: 'Sample', id: '1', imageId: 'sample', artistTitle: 'Sample title' },
+  artWork: { title: 'Sample', id: 1, imageId: 'sample', artistTitle: 'Sample title', handleRemoveArt: jest.fn() },
   submitRating: submitRating as jest.Mock,
   getAllArtwork: getAllArtwork as jest.Mock
 };
@@ -81,6 +81,6 @@ describe('Art Rater', () => {
     fireEvent.click(getSubmitButton());
 
     expect(mocks.submitRating).toHaveBeenCalledTimes(1);
-    expect(mocks.submitRating).toHaveBeenLastCalledWith({ id: '1', rating: 1 });
+    expect(mocks.submitRating).toHaveBeenLastCalledWith({ id: 1, rating: 1 });
   });
 });

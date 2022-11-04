@@ -3,7 +3,7 @@ export interface ArtList {
 }
 
 export interface APIResponse {
-  success?: boolean;
-  error?: boolean;
+  success: boolean;
+  error: boolean;
   message: string;
 }
