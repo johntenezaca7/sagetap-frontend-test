@@ -1,9 +1,20 @@
-/* eslint-disable */
-
 import React, { useEffect, useState } from 'react';
 import { ArtItem, AddArtItem } from './components';
-import { getAllArtwork, APIResponse, getArtwork } from './util';
-import './App.css';
+import { getAllArtwork, APIResponse, getArtwork } from './utils';
+import styled from 'styled-components';
+
+const Header = styled.h1`
+  margin: 0;
+  padding: 20px;
+  font-size: 50px;
+  box-shadow: 0px -2px 8px #929292;
+`;
+
+const ArtListContainer = styled.div`
+  max-width: 1400px;
+  margin: auto;
+  padding: 20px;
+`;
 
 function App() {
   // TODO - Figure out correct typeing
@@ -38,11 +49,9 @@ function App() {
     try {
       getArtwork(id)
         .then((newArt) => {
-          console.log({ newArt });
           setArtList((prev) => [...prev, newArt]);
         })
-        .catch((error) => {
-          console.log({ error });
+        .catch(() => {
           setAPIError();
         });
     } catch (error) {
@@ -51,29 +60,31 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div>
       {appError?.error ? (
         <p>An Error occurred</p>
       ) : (
         <>
-          <h1>Art Rater</h1>
-          {artList.length > 0 &&
-            artList.map((art) => {
-              const {
-                data: { id, image_id, title, artist_title }
-              } = art;
+          <Header>Art Rater</Header>
+          <ArtListContainer>
+            {artList.length > 0 &&
+              artList.map((art) => {
+                const {
+                  data: { id, image_id, title, artist_title }
+                } = art;
 
-              return (
-                <ArtItem
-                  key={id}
-                  id={id}
-                  imageId={image_id}
-                  title={title}
-                  artistTitle={artist_title}
-                  handleRemoveArt={handleRemoveArt}
-                />
-              );
-            })}
+                return (
+                  <ArtItem
+                    key={id}
+                    id={id}
+                    imageId={image_id}
+                    title={title}
+                    artistTitle={artist_title}
+                    handleRemoveArt={handleRemoveArt}
+                  />
+                );
+              })}
+          </ArtListContainer>
 
           <AddArtItem onClick={handleAddArt} />
         </>

@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { App } from './App';
 import { ArtItem, ArtItemProps } from './components';
-import { submitRating, getAllArtwork } from './util';
+import { submitRating, getAllArtwork } from './utils';
 
 const mocks = {
   title: 'Art Rater',
@@ -18,7 +18,7 @@ const getRatingButton = (rating: string) => screen.getByTestId(`rating-button-${
 const renderApp = () => render(<App />);
 const renderArtItem = (props: ArtItemProps) => render(<ArtItem {...props} />);
 
-jest.mock('./util/submitRating', () => ({
+jest.mock('./utils/submitRating', () => ({
   submitRating: jest.fn()
 }));
 

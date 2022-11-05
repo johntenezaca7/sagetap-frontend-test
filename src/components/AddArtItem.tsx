@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { APIResponse } from '../util';
+import { APIResponse } from '../utils';
 
 export interface AddArtProps {
   onClick: (id: number) => void;
@@ -26,6 +26,7 @@ export const AddArtItem = ({ onClick }: AddArtProps) => {
   };
   return (
     <div>
+      <h2>Add Art</h2>
       <input
         value={artIdInput}
         onChange={(e) => setArtIdInput(e.target.value)}
