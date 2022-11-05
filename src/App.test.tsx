@@ -6,7 +6,14 @@ import { submitRating, getAllArtwork } from './utils';
 
 const mocks = {
   title: 'Art Rater',
-  artWork: { title: 'Sample', id: 1, imageId: 'sample', artistTitle: 'Sample title', handleRemoveArt: jest.fn() },
+  artWork: {
+    title: 'Sample',
+    id: 1,
+    imageId: 'sample',
+    artistTitle: 'Sample title',
+    handleRemoveArt: jest.fn(),
+    listingDetails: { index: 1, total: 1 }
+  },
   submitRating: submitRating as jest.Mock,
   getAllArtwork: getAllArtwork as jest.Mock
 };
