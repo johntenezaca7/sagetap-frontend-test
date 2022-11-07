@@ -35,11 +35,9 @@ Please add two pieces of functionality:
 
 You may notice that the user experience doesn't take into account any handling for when the API calls fail or take a long time to load. Please add some handling for this as well!
 
-<!--
 TODO Notes
-  - centralize and clean up styles
-  - add test coverage for ArtItem, AddArtItem, Loading, /utils and Modal
-  - mock inital API call better
-  - improve accessibility
 
- -->
+- centralize and clean up styles
+- add test coverage for ArtItem, AddArtItem, Loading, /utils and Modal
+- mock inital API call better
+- improve accessibility
